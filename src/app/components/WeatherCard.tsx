@@ -9,7 +9,6 @@ type WeatherCardProps = {
 };
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
-  // Перевірка наявності даних
   if (
     !weather ||
     !weather.main ||

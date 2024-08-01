@@ -1,19 +1,18 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation"; // Використовуйте правильний імпорт
+import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
 
 type NavigationProps = {
   currentTab: string;
   setCurrentTab: (tab: string) => void;
-  favorites?: string[]; // Додайте це, якщо плануєте використовувати
+  favorites?: string[];
 };
 
 const Navigation: React.FC<NavigationProps> = ({
   currentTab,
   setCurrentTab,
-  favorites,
 }) => {
   const router = useRouter();
 

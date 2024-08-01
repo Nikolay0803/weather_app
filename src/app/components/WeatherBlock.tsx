@@ -69,8 +69,7 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
       const date = new Date(now.getTime());
       date.setHours(index, 0, 0, 0);
 
-      // Генерація різних температур для кожної години (замість фіксованої температури)
-      const tempFluctuation = Math.sin((index / 24) * Math.PI) * 5; // Фейкове коливання температури
+      const tempFluctuation = Math.sin((index / 24) * Math.PI) * 5;
       const temperature = weather.main.temp + tempFluctuation;
 
       return {

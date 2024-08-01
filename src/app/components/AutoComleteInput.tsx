@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { debounce } from "lodash";
 import { getCitySuggestions } from "../api/api";
 import styles from "../page.module.css";
-import { getLocationByIP } from "../api/api"; // Оновіть шлях відповідно до вашого проекту
+import { getLocationByIP } from "../api/api";
 
 type AutoCompleteInputProps = {
   onSelect: (city: string) => void;
@@ -59,8 +59,8 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
   const handleLocateCity = async () => {
     const city = await getLocationByIP();
     if (city) {
-      setQuery(city); // Оновлює інпут з визначеним містом
-      onSelect(city); // Вставляє місто в батьківський компонент, якщо потрібно
+      setQuery(city);
+      onSelect(city);
     }
   };
 
