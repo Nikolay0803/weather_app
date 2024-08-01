@@ -1,95 +1,76 @@
-import Image from "next/image";
+"use client";
+
 import styles from "./page.module.css";
+import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import WeatherBlock from "./components/WeatherBlock";
+import AutoCompleteInput from "./components/AutoComleteInput";
+import { WeatherData } from "./types/types";
 
 export default function Home() {
+  const [cities, setCities] = useState<string[]>(() => {
+    const storedCities = localStorage.getItem("cities");
+    return storedCities ? JSON.parse(storedCities) : [];
+  });
+
+  const [currentTab, setCurrentTab] = useState<string>("home");
+
+  const [weatherBlocks, setWeatherBlocks] = useState<string[]>(() => {
+    const storedWeatherBlocks = localStorage.getItem("weatherBlocks");
+    return storedWeatherBlocks ? JSON.parse(storedWeatherBlocks) : [];
+  });
+
+  const [favorites, setFavorites] = useState<WeatherData[]>(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cities", JSON.stringify(cities));
+  }, [cities]);
+
+  useEffect(() => {
+    localStorage.setItem("weatherBlocks", JSON.stringify(weatherBlocks));
+  }, [weatherBlocks]);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const addWeatherBlock = (city: string) => {
+    if (weatherBlocks.length < 5 && !weatherBlocks.includes(city)) {
+      setWeatherBlocks([...weatherBlocks, city]);
+    }
+  };
+
+  const handleSelectCity = (city: string) => {
+    if (!cities.includes(city)) {
+      setCities([...cities, city]);
+    }
+    addWeatherBlock(city);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div className={styles.container}>
+      <Header />
+      <Navigation currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <div className={styles.content}>
+        <AutoCompleteInput onSelect={handleSelectCity} />
+        {weatherBlocks.map((city, index) => (
+          <WeatherBlock
+            key={index}
+            id={index}
+            city={city}
+            removeBlock={() => {
+              const newBlocks = weatherBlocks.filter((_, idx) => idx !== index);
+              setWeatherBlocks(newBlocks);
+            }}
+            favorites={favorites}
+            setFavorites={setFavorites}
+          />
+        ))}
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
