@@ -14,7 +14,6 @@ import {
 } from "chart.js";
 import { ForecastData } from "../types/types";
 
-// Регістрація компонентів Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -31,11 +30,8 @@ type WeatherChartProps = {
 
 const WeatherChart: React.FC<WeatherChartProps> = ({ forecast }) => {
   if (!forecast || forecast.list.length === 0) {
-    console.log("No forecast data available");
     return <div>No data available</div>;
   }
-
-  console.log("Forecast data for chart:", forecast);
 
   const labels = forecast.list.map((entry) =>
     new Date(entry.dt * 1000).toLocaleString("en-GB", {

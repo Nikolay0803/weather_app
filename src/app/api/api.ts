@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
+const TOKEN = process.env.NEXT_PUBLIC__IPINFO_TOKEN;
 
 export const getWeatherByCity = (city: string) => {
   return axios.get(
@@ -26,11 +27,9 @@ export const getCitySuggestions = async (query: string) => {
   }
 };
 
-export const getUserLocation = async () => {
+export const getLocationByIP = async () => {
   try {
-    const response = await fetch(
-      "https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN"
-    );
+    const response = await fetch(`https://ipinfo.io/json?token=${TOKEN}`);
     const data = await response.json();
     return data.city;
   } catch (error) {
