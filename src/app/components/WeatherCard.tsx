@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { WeatherData } from "../types/types";
 import styles from "../page.module.css";

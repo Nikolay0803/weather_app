@@ -1,4 +1,5 @@
-// src/app/components/AutoCompleteInput.tsx
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { debounce } from "lodash";
 import { getCitySuggestions } from "../api/api";

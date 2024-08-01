@@ -1,4 +1,4 @@
-// src/components/WeatherBlock.tsx
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { getWeatherByCity, getWeatherForecast } from "../api/api";
@@ -102,10 +102,7 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
     <div
       className={`${styles.weatherBlock} ${isFavorite ? styles.favorite : ""}`}
     >
-      <button
-        className={styles.allButton}
-        onClick={() => removeBlock(id)}
-      >
+      <button className={styles.allButton} onClick={() => removeBlock(id)}>
         Видалити
       </button>
       <button className={styles.allButton} onClick={toggleView}>
