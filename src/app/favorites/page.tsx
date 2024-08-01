@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import { WeatherData } from "../types/types";
 import styles from "../page.module.css";
-import FavoriteCard from "../components/FacoriteCard";
+import FavoriteCard from "../components/FavoriteCard";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState<WeatherData[]>([]);
@@ -32,12 +32,14 @@ const FavoritesPage = () => {
   useEffect(() => {
     if (favorites.length > 0) {
       localStorage.setItem("favorites", JSON.stringify(favorites));
+    } else {
+      localStorage.removeItem("favorites");
     }
   }, [favorites]);
 
-    const handleRemoveFavorite = (cityName: string) => {
-      setFavorites(favorites.filter((fav) => fav.name !== cityName));
-    };
+  const handleRemoveFavorite = (cityName: string) => {
+    setFavorites(favorites.filter((fav) => fav.name !== cityName));
+  };
 
   return (
     <div className={styles.container}>
