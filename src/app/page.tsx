@@ -9,33 +9,38 @@ import AutoCompleteInput from "./components/AutoComleteInput";
 import { WeatherData } from "./types/types";
 
 export default function Home() {
-  const [cities, setCities] = useState<string[]>(() => {
-    const storedCities = localStorage.getItem("cities");
-    return storedCities ? JSON.parse(storedCities) : [];
-  });
-
+  const [cities, setCities] = useState<string[]>([]);
   const [currentTab, setCurrentTab] = useState<string>("home");
-
-  const [weatherBlocks, setWeatherBlocks] = useState<string[]>(() => {
-    const storedWeatherBlocks = localStorage.getItem("weatherBlocks");
-    return storedWeatherBlocks ? JSON.parse(storedWeatherBlocks) : [];
-  });
-
-  const [favorites, setFavorites] = useState<WeatherData[]>(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
-  });
+  const [weatherBlocks, setWeatherBlocks] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<WeatherData[]>([]);
 
   useEffect(() => {
-    localStorage.setItem("cities", JSON.stringify(cities));
+    const storedCities = localStorage.getItem("cities");
+    if (storedCities) setCities(JSON.parse(storedCities));
+
+    const storedWeatherBlocks = localStorage.getItem("weatherBlocks");
+    if (storedWeatherBlocks) setWeatherBlocks(JSON.parse(storedWeatherBlocks));
+
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) setFavorites(JSON.parse(storedFavorites));
+  }, []);
+
+  useEffect(() => {
+    if (cities.length > 0) {
+      localStorage.setItem("cities", JSON.stringify(cities));
+    }
   }, [cities]);
 
   useEffect(() => {
-    localStorage.setItem("weatherBlocks", JSON.stringify(weatherBlocks));
+    if (weatherBlocks.length > 0) {
+      localStorage.setItem("weatherBlocks", JSON.stringify(weatherBlocks));
+    }
   }, [weatherBlocks]);
 
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    if (favorites.length > 0) {
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
   }, [favorites]);
 
   const addWeatherBlock = (city: string) => {

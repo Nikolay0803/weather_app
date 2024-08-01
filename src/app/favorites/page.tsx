@@ -8,20 +8,22 @@ import { WeatherData } from "../types/types";
 import styles from "../page.module.css";
 
 const FavoritesPage = () => {
-  const [favorites] = useState<WeatherData[]>(() => {
-    try {
-      const storedFavorites = localStorage.getItem("favorites");
-      return storedFavorites ? JSON.parse(storedFavorites) : [];
-    } catch (error) {
-      console.error("Error loading favorites:", error);
-      return [];
-    }
-  });
-
+  const [favorites, setFavorites] = useState<WeatherData[]>([]);
   const [currentTab, setCurrentTab] = useState<string>("favorites");
 
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    try {
+      const storedFavorites = localStorage.getItem("favorites");
+      if (storedFavorites) setFavorites(JSON.parse(storedFavorites));
+    } catch (error) {
+      console.error("Error loading favorites:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
   }, [favorites]);
 
   return (
