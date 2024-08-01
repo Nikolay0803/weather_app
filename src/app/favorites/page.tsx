@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
-import WeatherCard from "../components/WeatherCard";
 import { WeatherData } from "../types/types";
 import styles from "../page.module.css";
+import FavoriteCard from "../components/FacoriteCard";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState<WeatherData[]>([]);
@@ -35,6 +35,10 @@ const FavoritesPage = () => {
     }
   }, [favorites]);
 
+    const handleRemoveFavorite = (cityName: string) => {
+      setFavorites(favorites.filter((fav) => fav.name !== cityName));
+    };
+
   return (
     <div className={styles.container}>
       <Header />
@@ -42,11 +46,15 @@ const FavoritesPage = () => {
       <div className={styles.content}>
         <h2>Улюблене</h2>
         {loading ? (
-          <div className={styles.loader}/>
+          <div className={styles.loader} />
         ) : favorites.length > 0 ? (
           <div className={styles.favorites}>
-            {favorites.map((favorite, index) => (
-              <WeatherCard key={index} weather={favorite} />
+            {favorites.map((favorite) => (
+              <FavoriteCard
+                key={favorite.name}
+                weather={favorite}
+                onRemove={() => handleRemoveFavorite(favorite.name)}
+              />
             ))}
           </div>
         ) : (

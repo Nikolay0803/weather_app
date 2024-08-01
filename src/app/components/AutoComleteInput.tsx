@@ -103,12 +103,14 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
           ))}
         </ul>
       )}
-      <button className={styles.allButton} onClick={handleAddCity}>
-        Додати місто
-      </button>
-      <button className={styles.allButton} onClick={handleLocateCity}>
-        Визначити місце
-      </button>
+      <div className={styles.blockAllButton}>
+        <button className={styles.allButton} onClick={handleAddCity}>
+          Додати місто
+        </button>
+        <button className={styles.allButton} onClick={handleLocateCity}>
+          Визначити місце
+        </button>
+      </div>
     </>
   );
 };

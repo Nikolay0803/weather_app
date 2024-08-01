@@ -106,16 +106,18 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
     <div
       className={`${styles.weatherBlock} ${isFavorite ? styles.favorite : ""}`}
     >
-      <button className={styles.allButton} onClick={() => removeBlock(id)}>
-        Видалити
-      </button>
-      <button className={styles.allButton} onClick={toggleView}>
-        {view === "day"
-          ? "Показати 5-денний прогноз"
-          : "Показати денний прогноз"}
-      </button>
+      <div className={styles.blockAllButton}>
+        <button className={styles.allButton} onClick={() => removeBlock(id)}>
+          Видалити
+        </button>
+        <button className={styles.allButton} onClick={toggleView}>
+          {view === "day"
+            ? "Показати 5-денний прогноз"
+            : "Показати денний прогноз"}
+        </button>
+      </div>
       {loading ? (
-        <div className={styles.loader}/>
+        <div className={styles.loader} />
       ) : (
         <>
           {weather && <WeatherCard weather={weather} />}
@@ -123,14 +125,19 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
           {view === "day" && (
             <WeatherChart forecast={generateDailyForecast()} />
           )}
-          <button className={styles.allButton} onClick={addToFavorites}>
-            До улюбленого
-          </button>
-          {isFavorite && (
-            <button className={styles.allButton} onClick={removeFromFavorites}>
-              Видалити з улюбленого
+          <div className={styles.blockAllButton}>
+            <button className={styles.allButton} onClick={addToFavorites}>
+              До улюбленого
             </button>
-          )}
+            {isFavorite && (
+              <button
+                className={styles.allButton}
+                onClick={removeFromFavorites}
+              >
+                Видалити з улюбленого
+              </button>
+            )}
+          </div>
         </>
       )}
       {showModal && (
