@@ -10,14 +10,23 @@ import styles from "../page.module.css";
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState<WeatherData[]>([]);
   const [currentTab, setCurrentTab] = useState<string>("favorites");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    try {
-      const storedFavorites = localStorage.getItem("favorites");
-      if (storedFavorites) setFavorites(JSON.parse(storedFavorites));
-    } catch (error) {
-      console.error("Error loading favorites:", error);
-    }
+    const loadFavorites = async () => {
+      try {
+        const storedFavorites = localStorage.getItem("favorites");
+        if (storedFavorites) {
+          setFavorites(JSON.parse(storedFavorites));
+        }
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFavorites();
   }, []);
 
   useEffect(() => {
@@ -32,7 +41,9 @@ const FavoritesPage = () => {
       <Navigation currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div className={styles.content}>
         <h2>Улюблене</h2>
-        {favorites.length > 0 ? (
+        {loading ? (
+          <div className={styles.loader}/>
+        ) : favorites.length > 0 ? (
           <div className={styles.favorites}>
             {favorites.map((favorite, index) => (
               <WeatherCard key={index} weather={favorite} />

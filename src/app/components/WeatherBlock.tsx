@@ -7,6 +7,7 @@ import WeatherChart from "./WeatherChart";
 import Modal from "./Modal";
 import { WeatherData, ForecastData } from "../types/types";
 import styles from "../page.module.css";
+
 type WeatherBlockProps = {
   id: number;
   city: string;
@@ -26,9 +27,11 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [view, setView] = useState<"day" | "5day">("day");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const weatherResponse = await getWeatherByCity(city);
         setWeather(weatherResponse.data);
@@ -37,6 +40,8 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
         setForecast(forecastResponse.data);
       } catch (error) {
         console.error("Error fetching weather data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -109,23 +114,31 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
           ? "Показати 5-денний прогноз"
           : "Показати денний прогноз"}
       </button>
-      {weather && <WeatherCard weather={weather} />}
-      {view === "5day" && forecast && <WeatherChart forecast={forecast} />}
-      {view === "day" && <WeatherChart forecast={generateDailyForecast()} />}
-      <button className={styles.allButton} onClick={addToFavorites}>
-        До улюбленого{" "}
-      </button>
-      {isFavorite && (
-        <button className={styles.allButton} onClick={removeFromFavorites}>
-          Видалити з улюбленого
-        </button>
+      {loading ? (
+        <div className={styles.loader}/>
+      ) : (
+        <>
+          {weather && <WeatherCard weather={weather} />}
+          {view === "5day" && forecast && <WeatherChart forecast={forecast} />}
+          {view === "day" && (
+            <WeatherChart forecast={generateDailyForecast()} />
+          )}
+          <button className={styles.allButton} onClick={addToFavorites}>
+            До улюбленого
+          </button>
+          {isFavorite && (
+            <button className={styles.allButton} onClick={removeFromFavorites}>
+              Видалити з улюбленого
+            </button>
+          )}
+        </>
       )}
       {showModal && (
         <Modal
           onClose={() => setShowModal(false)}
           onConfirm={() => setShowModal(false)}
         >
-          Максимальна кількіть улюблених міст 5
+          Максимальна кількість улюблених міст 5
         </Modal>
       )}
     </div>

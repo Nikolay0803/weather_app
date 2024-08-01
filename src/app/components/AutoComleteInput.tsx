@@ -14,6 +14,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
   const [query, setQuery] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (query.length > 2) {
@@ -25,8 +26,15 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
   }, [query]);
 
   const fetchSuggestions = debounce(async (query: string) => {
-    const suggestions = await getCitySuggestions(query);
-    setSuggestions(suggestions);
+    setLoading(true);
+    try {
+      const suggestions = await getCitySuggestions(query);
+      setSuggestions(suggestions);
+    } catch (error) {
+      console.error("Error fetching city suggestions:", error);
+    } finally {
+      setLoading(false);
+    }
   }, 300);
 
   const handleSelect = (city: string) => {
@@ -57,10 +65,17 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
   };
 
   const handleLocateCity = async () => {
-    const city = await getLocationByIP();
-    if (city) {
-      setQuery(city);
-      onSelect(city);
+    setLoading(true);
+    try {
+      const city = await getLocationByIP();
+      if (city) {
+        setQuery(city);
+        onSelect(city);
+      }
+    } catch (error) {
+      console.error("Error determining city location:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,7 +89,8 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
         placeholder="Enter city name"
         className={styles.autoCompleteInput}
       />
-      {suggestions.length > 0 && (
+      {loading && <div className={styles.loader} />}
+      {suggestions.length > 0 && !loading && (
         <ul className={styles.suggestions}>
           {suggestions.map((city, index) => (
             <li
