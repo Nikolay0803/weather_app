@@ -84,6 +84,7 @@
   padding: 15px;
   background-color: #1976d2;
   border-radius: 10px;
+  color: white;
 }
 
 .cityAutocomplete {
@@ -129,7 +130,7 @@
   padding: 10px 20px;
   border-radius: 12px;
   background-color: #4caf50;
-  color: white; /* White text */
+  color: white;
   border: none;
   font-size: 16px;
   font-weight: bold;
