@@ -5,20 +5,20 @@ const TOKEN = process.env.NEXT_PUBLIC__IPINFO_TOKEN;
 
 export const getWeatherByCity = (city: string) => {
   return axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=ua`
   );
 };
 
 export const getWeatherForecast = (city: string) => {
   return axios.get(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&lang=ua`
   );
 };
 
 export const getCitySuggestions = async (query: string) => {
   try {
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/find?q=${query}&type=like&sort=population&cnt=30&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/find?q=${query}&type=like&sort=population&cnt=30&appid=${API_KEY}&lang=ua`
     );
     return response.data.list.map((item: any) => item.name);
   } catch (error) {

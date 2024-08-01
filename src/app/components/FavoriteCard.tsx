@@ -16,10 +16,10 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ weather, onRemove }) => {
         <h3>
           {weather.name}, {weather.sys.country}
         </h3>
-        <p>Temperature: {weather.main.temp}°C</p>
-        <p>Weather: {weather.weather[0].description}</p>
-        <p>Humidity: {weather.main.humidity}%</p>
-        <p>Pressure: {weather.main.pressure} hPa</p>
+        <p>Температура: {weather.main.temp}°C</p>
+        <p>Погода: {weather.weather[0].description}</p>
+        <p>Вологість: {weather.main.humidity}%</p>
+        <p>Тиск: {weather.main.pressure} hPa</p>
       </div>
       <button className={styles.removeButton} onClick={onRemove}>
         Видалити

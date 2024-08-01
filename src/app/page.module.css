@@ -24,7 +24,7 @@
   border-radius: 12px;
   margin: 0 12px;
   padding: 12px 20px;
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   border: none;
   font-size: 16px;
@@ -35,12 +35,12 @@
 }
 
 .navigation button:hover {
-  background-color: #1976D2;
+  background-color: #1976d2;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .navigation button.active {
-  background-color: #0D47A1;
+  background-color: #0d47a1;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -49,9 +49,7 @@
   box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.5); /* Light blue outline */
 }
 
-
 .content {
-
   padding: 10px;
   margin-top: 20px;
 }
@@ -74,6 +72,17 @@
 .weatherCard,
 .weatherChart {
   margin-top: 20px;
+}
+
+.weatherList {
+  display: flex;
+  gap: 20px;
+}
+
+.weatherItem {
+  padding: 15px;
+  background-color: #1976d2;
+  border-radius: 10px;
 }
 
 .cityAutocomplete {
@@ -118,7 +127,7 @@
 .allButton {
   padding: 10px 20px;
   border-radius: 12px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white; /* White text */
   border: none;
   font-size: 16px;
@@ -129,7 +138,7 @@
 }
 
 .allButton:hover {
-  background-color: #45a049; 
+  background-color: #45a049;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -143,7 +152,6 @@
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
 }
 
-
 .loader {
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -154,8 +162,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .favoriteCard {

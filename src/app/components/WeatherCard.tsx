@@ -21,8 +21,16 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
   return (
     <div className={styles.card}>
       <h3>{weather.name}</h3>
-      <p>Temperature: {weather.main.temp}°C</p>
-      <p>{weather.weather[0].description}</p>
+      <div className={styles.weatherList}>
+        <p className={styles.weatherItem}>Температура: {weather.main.temp}°C</p>
+        <p className={styles.weatherItem}>
+          Погода: {weather.weather[0].description}
+        </p>
+        <p className={styles.weatherItem}>
+          Вологість: {weather.main.humidity}%
+        </p>
+        <p className={styles.weatherItem}>Тиск: {weather.main.pressure} hPa</p>
+      </div>
     </div>
   );
 };

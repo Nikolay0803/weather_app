@@ -86,7 +86,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Enter city name"
+        placeholder="Введіть назву міста"
         className={styles.autoCompleteInput}
       />
       {loading && <div className={styles.loader} />}
