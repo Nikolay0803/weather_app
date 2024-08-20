@@ -55,6 +55,7 @@
 }
 
 .weatherBlock {
+  background-color: #fdf5e6;
   border: 1px solid #ccc;
   padding: 10px;
   margin: 10px;
@@ -173,6 +174,7 @@
 }
 
 .favoriteCard {
+  background-color: #fdf5e6;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
